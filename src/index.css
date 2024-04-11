@@ -1,0 +1,15 @@
+.shadow {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.blur {
+  background: rgba(0, 0, 0, 0.378);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgb(135, 135, 135);
+  backdrop-filter:  blur(10px);
+  border: 1px solid rgba(255, 255, 255, 1);
+}
+
+.darken {
+  filter: brightness(30%);
+}
