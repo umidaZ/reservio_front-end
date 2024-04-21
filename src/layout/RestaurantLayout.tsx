@@ -1,17 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Alert, Box, Center, Text } from "@chakra-ui/react";
-import Navbar from "../components/pages/ui/Navbar";
+import { Box, Text } from "@chakra-ui/react";
 import Hero from "../components/pages/ui/Hero";
-import TopRestaurants from "../components/pages/TopRestaurants";
+import Navbar from "../components/pages/ui/Navbar";
 import RestaurantCard from "../components/pages/ui/RestaurantCard";
 
 import Footer from "../components/pages/ui/Footer";
-// import { dummyRestaurants } from "../constants/restaurants";
 
 import { useQuery } from "@tanstack/react-query";
-import { getRestaurants } from "../services/apiGetRestaurant";
 import Loader from "../components/pages/ui/Loader";
 import NoDataFound from "../components/pages/ui/NoDataFound";
+import { getRestaurants } from "../services/apiGetRestaurant";
 
 const RestaurantLayout = () => {
   const { data, isLoading, isError } = useQuery({

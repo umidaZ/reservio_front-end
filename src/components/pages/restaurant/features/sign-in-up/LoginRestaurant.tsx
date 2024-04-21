@@ -11,10 +11,10 @@ import {
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import axios, { AxiosError } from "axios";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../../../../constants/BASE_URL";
 import { login } from "../../../../../features/userSlice";
-import { useNavigate } from "react-router-dom";
 
 const LoginRestaurant = () => {
   const [client, setClient] = useState({
@@ -36,11 +36,12 @@ const LoginRestaurant = () => {
         if (res.status == 200) {
           dispatch(login(res.data.user));
           window.localStorage.setItem("token", res.data.access);
+          window.localStorage.setItem("restaurant", JSON.stringify(res.data));
           setTimeout(() => {
             navigate("/restaurant/user-dashboard/dashboard-orders");
-            setTimeout(() => {
-              window.location.reload();
-            }, 500);
+            // setTimeout(() => {
+            //   window.location.reload();
+            // }, 500);
           }, 1000);
         }
       })

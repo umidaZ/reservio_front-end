@@ -18,18 +18,38 @@ import { MdDashboard, MdOutlineReviews } from "react-icons/md";
 import { SiGoogledocs } from "react-icons/si";
 import ReactStars from "react-rating-stars-component";
 import Navbar from "../components/pages/ui/Navbar";
-
+import { CiViewTable } from "react-icons/ci";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { setRestaurantInfo } from "../features/restaurantInfoSlice";
+import { getRestaurantByID } from "../services/apiGetRestaurantById";
+import ReviewsPage from "../components/pages/restaurant/features/reviews/ReviewsPage";
 
 const UserDashboardLayout = ({ children }: { children: React.ReactNode }) => {
+  const dispatch = useDispatch();
+
+  const { data: restaurant } = useQuery({
+    queryKey: ["admin/restaurantById"],
+    queryFn: () =>
+      getRestaurantByID(
+        JSON.parse(localStorage.getItem("restaurant")!).restaurant
+      ),
+  });
+  useEffect(() => {
+    dispatch(setRestaurantInfo(restaurant));
+  }, [restaurant, dispatch]);
   return (
     <Box position={"relative"}>
       <Navbar />
       <Box
         minHeight={"30vh"}
-        backgroundImage={
-          "url(https://img.jakpost.net/c/2016/09/29/2016_09_29_12990_1475116504._large.jpg)"
-        }
+        backgroundImage={`url(${
+          restaurant?.photos
+            ? restaurant?.photos
+            : "https://img.jakpost.net/c/2016/09/29/2016_09_29_12990_1475116504._large.jpg"
+        })`}
         backgroundSize={"cover"}
         backgroundPosition={"center"}
         display={"flex"}
@@ -38,23 +58,29 @@ const UserDashboardLayout = ({ children }: { children: React.ReactNode }) => {
       >
         <Box padding={5} display={"flex"} className='blur' width={"80%"}>
           <img
-            src='https://foodbakery.pixfill.com/wp-content/uploads/2022/08/fb-restaurant-10-1-1.png'
+            width={"200px"}
+            src={
+              restaurant?.photos
+                ? restaurant?.photos
+                : "https://foodbakery.pixfill.com/wp-content/uploads/2022/08/fb-restaurant-10-1-1.png"
+            }
             alt=''
           />
           <Box display={"flex"} flexDirection={"column"} gap={2} mx={10}>
             <Text color={"white"} fontSize={[18, 25, 30]}>
-              McDonalds
+              {restaurant?.name || "-------"}
             </Text>
             <Text color={"white"} fontSize={[12, 15, 20]}>
-              Cheese Burger, Ice Cream & Potato Fries
+              {restaurant?.cuisines?.map((e) => e.name)?.join(" ,")}
             </Text>
             <ReactStars
               count={5}
-              value={4.6}
+              value={restaurant?.rating || 0}
               size={24}
               isHalf={true}
               edit={false}
               activeColor='#DA3743'
+              color='white'
             />{" "}
           </Box>
         </Box>
@@ -90,9 +116,9 @@ const UserDashboardLayout = ({ children }: { children: React.ReactNode }) => {
                 </Link>
               </ListItem>
               <ListItem cursor={"pointer"} className='shadow' padding={2}>
-                <Link to='/restaurant/user-dashboard/CuisinePage'>
-                  <ListIcon as={CiMenuFries} color='green.500' />
-                  Cuisine Page
+                <Link to='/restaurant/user-dashboard/tablesPage'>
+                  <ListIcon as={CiViewTable} color='green.500' />
+                  Table management
                 </Link>
               </ListItem>
 
@@ -122,7 +148,7 @@ const UserDashboardLayout = ({ children }: { children: React.ReactNode }) => {
           >
             {/* <RestaurantForm /> */}
             {/* <RestaurantMenuBuilder /> */}
-            {/* <ReviewsPage /> */}
+
             {children}
             {/* <Orders /> */}
           </GridItem>

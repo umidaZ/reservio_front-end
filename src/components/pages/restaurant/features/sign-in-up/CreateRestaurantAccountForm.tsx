@@ -73,7 +73,13 @@ const CreateRestaurantAccountForm = () => {
     try {
       const formData = new FormData();
       Object.entries(client).forEach(([key, value]) => {
-        formData.append(key, value);
+        if (typeof value === "string" || value instanceof Blob) {
+          formData.append(key, value);
+        } else if (Array.isArray(value)) {
+          value.forEach((item) => formData.append(`${key}[]`, item.toString()));
+        } else {
+          formData.append(key, value.toString());
+        }
       });
       formData.append("role", "1");
       const response = await axios.post(
@@ -106,7 +112,7 @@ const CreateRestaurantAccountForm = () => {
   return (
     <Box>
       <Text my={4} textAlign={"center"} fontWeight={"bold"}>
-        Create Restaurant formss
+        Create Restaurant
       </Text>
       <FormControl>
         <FormLabel>First name</FormLabel>
@@ -196,6 +202,7 @@ const CreateRestaurantAccountForm = () => {
         />
       </FormControl>
       <Select
+        my={4}
         name='cuisines'
         placeholder='Cuisines'
         onChange={(e) => {
@@ -206,7 +213,7 @@ const CreateRestaurantAccountForm = () => {
           });
         }}
       >
-        {cuisines?.data?.map((c: any, i: number) => {
+        {cuisines?.map((c: any, i: number) => {
           return (
             <option key={i} value={c.id}>
               {c.name}

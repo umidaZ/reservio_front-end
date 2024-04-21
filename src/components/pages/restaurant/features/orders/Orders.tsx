@@ -10,6 +10,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Select,
   Table,
   TableCaption,
   TableContainer,
@@ -19,30 +20,39 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import useDynamicSearch from "../../../../../hooks/useDynamicSearch";
+import { QueryClient, useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { reservations } from "../../../../../constants/restaurants";
-import { useQuery } from "@tanstack/react-query";
+import useDynamicSearch from "../../../../../hooks/useDynamicSearch";
+import { getRestaurantByID } from "../../../../../services/apiGetRestaurantById";
 import { getAdminReservations } from "../../../../../services/apiAdminGetReservations";
+import axios from "axios";
+import { BASE_URL } from "../../../../../constants/BASE_URL";
 
 interface Reservation {
-  num_guests: number;
-  reservation_day: string;
-  reservation_time: string;
-  customer_name: string;
+  id: number;
+  restaurant_id: number;
   customer_id: number;
-  order_status: "Pending" | "Accepted" | "Rejected";
+  table_id: number;
+  date: string;
+  start_time: string;
+  end_time: string;
+  num_guests: number;
+  special_requests: string;
+  status: string;
+  restaurant: string;
 }
-
-function getOrderStatusBadge(orderStatus: string) {
+function getOrderStatusBadge(status: string) {
   let color;
-  switch (orderStatus.toLowerCase()) {
-    case "pending":
+  console.log({ status });
+  switch (status) {
+    case "Pending":
       color = "yellow";
       break;
-    case "accepted":
+    case "Accept":
       color = "green";
       break;
-    case "rejected":
+    case "Reject":
       color = "red";
       break;
     default:
@@ -51,18 +61,31 @@ function getOrderStatusBadge(orderStatus: string) {
 
   return (
     <Badge paddingX={5} paddingY={2} rounded={"full"} colorScheme={color}>
-      {orderStatus}
+      {status}
     </Badge>
   );
 }
 const Orders = () => {
-  const { data } = useQuery({
-    queryKey: ["admin/reservations"],
-    queryFn: () => getAdminReservations(11),
+  const qc = new QueryClient();
+  const { data: restaurant } = useQuery({
+    queryKey: ["admin/restaurantById"],
+    queryFn: () =>
+      getRestaurantByID(
+        JSON.parse(localStorage.getItem("restaurant")!).restaurant
+      ),
   });
-  const [filteredItems, searchItems] =
-    useDynamicSearch<Reservation>(reservations);
-  console.log({ orders: data });
+  const { data: res } = useQuery({
+    queryKey: ["reservations"],
+    queryFn: () =>
+      getAdminReservations(
+        JSON.parse(localStorage.getItem("restaurant")!).restaurant
+      ),
+  });
+  console.log(res);
+  useEffect(() => {
+    window.localStorage.setItem("restaurantInfo", JSON.stringify(restaurant));
+  }, [restaurant]);
+
   return (
     <>
       <Flex my={3}>
@@ -94,71 +117,56 @@ const Orders = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {filteredItems?.map((r, i) => {
+            {res?.data?.map((r: Reservation, i: number) => {
               const {
                 num_guests,
-                reservation_day,
-                reservation_time,
                 customer_id,
-                customer_name,
-                order_status,
+                date,
+                end_time,
+                status,
+                start_time,
+                id,
               } = r;
               return (
                 <Tr key={i}>
                   <Td>{num_guests}</Td>
-                  <Td>{reservation_day}</Td>
-                  <Td>{reservation_time}</Td>
-                  <Td>{customer_id}</Td>
-                  <Td>{customer_name}</Td>
-                  <Td>{getOrderStatusBadge(order_status)}</Td>
+                  <Td>{date}</Td>
                   <Td>
-                    <Menu>
-                      {({ isOpen }) => (
-                        <>
-                          <MenuButton
-                            colorScheme='blue'
-                            isActive={isOpen}
-                            onChange={(e) => console.log(e)}
-                            as={Button}
-                            rightIcon={<ChevronDownIcon />}
-                          >
-                            {isOpen ? "Close" : "Status"}
-                          </MenuButton>
-                          <MenuList>
-                            <MenuItem>Accept</MenuItem>
-                            <MenuItem>Reject</MenuItem>
-                            <MenuItem>Pending</MenuItem>
-                          </MenuList>
-                        </>
-                      )}
-                    </Menu>
+                    {start_time} - {end_time}
+                  </Td>
+                  <Td>{customer_id}</Td>
+                  <Td>
+                    {start_time} - {end_time}
+                  </Td>
+                  <Td>{getOrderStatusBadge(status)}</Td>
+                  <Td>
+                    <Select
+                      onChange={async (e) => {
+                        console.log(e.target.value);
+
+                        await axios
+                          .post(BASE_URL + "manage-reservation/" + id + "/", {
+                            status: e.target.value,
+                          })
+                          .then((res) => {
+                            console.log(res);
+                            window.location.reload();
+                          })
+                          .catch((err) => {
+                            console.log(err);
+                          });
+                      }}
+                      placeholder={status}
+                    >
+                      <option value='Accept'>Accept</option>
+                      <option value='Reject'>Reject</option>
+                      <option value='Pending'>Pending</option>
+                    </Select>
                   </Td>
                 </Tr>
               );
             })}
-            {/* <Tr>
-                    <Td>inches</Td>
-                    <Td>millimetres (mm)</Td>
-                    <Td isNumeric>25.4</Td>
-                  </Tr>
-                  <Tr>
-                    <Td>feet</Td>
-                    <Td>centimetres (cm)</Td>
-                    <Td isNumeric>30.48</Td>
-                  </Tr>
-                  <Tr>
-                    <Td>yards</Td>
-                    <Td>metres (m)</Td>
-                    <Td isNumeric>0.91444</Td>
-                  </Tr> */}
           </Tbody>
-          {/* <Tfoot>
-                  <Tr>
-                    <Th>To convert</Th>
-                    <Th>into</Th>
-                    <Th isNumeric>multiply by</Th>
-                  </Tr>
-                </Tfoot> */}
         </Table>
       </TableContainer>
     </>

@@ -1,9 +1,9 @@
 import axios from "axios";
 import { BASE_URL } from "../constants/BASE_URL";
 
-export const getRestaurants = async () => {
+export const getRestaurantByID = async (id: number) => {
   return await axios
-    .get(BASE_URL + "restaurants/")
+    .get(BASE_URL + `restaurants/${id}/`)
     .then((response) => response.data)
     .catch((error) => error);
 };

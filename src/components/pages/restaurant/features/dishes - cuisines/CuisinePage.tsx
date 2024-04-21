@@ -9,6 +9,8 @@ import {
   Flex,
   Text,
 } from "@chakra-ui/react";
+import axios from "axios";
+import { BASE_URL } from "../../../../../constants/BASE_URL";
 
 interface Cuisine {
   id: number;
@@ -22,13 +24,14 @@ const CuisinePage: React.FC = () => {
   const [editText, setEditText] = useState("");
   const toast = useToast();
 
-  const addCuisine = () => {
+  const addCuisine = async () => {
     const newCuisineItem: Cuisine = {
       id: Date.now(), // simple ID generation strategy for demo purposes
       name: newCuisine,
     };
     setCuisines([...cuisines, newCuisineItem]);
     setNewCuisine("");
+    await axios.post(BASE_URL + `cu`);
     toast({
       title: "Cuisine added.",
       description: "We've added your cuisine to the list.",

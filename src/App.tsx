@@ -12,6 +12,7 @@ import ReviewsPage from "./components/pages/restaurant/features/reviews/ReviewsP
 import UpdateClientProfilePage from "./components/pages/clients/UpdateClientProfilePage";
 import UpdateRestaurantForm from "./components/pages/restaurant/update/UpdateRestaurantForm";
 import ReservationList from "./components/pages/clients/ReservationList";
+import TablesPage from "./components/pages/restaurant/features/tables/TablesPage";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -50,9 +51,9 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/restaurant/user-dashboard/CuisinePage",
+    path: "/restaurant/user-dashboard/tablesPage",
     element: (
-      <UserDashboardLayout children={<CuisinePage />}></UserDashboardLayout>
+      <UserDashboardLayout children={<TablesPage />}></UserDashboardLayout>
     ),
   },
   {

@@ -1,87 +1,87 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Box,
   Button,
+  Checkbox,
   FormControl,
   FormLabel,
   Input,
-  Textarea,
   NumberInput,
   NumberInputField,
-  Checkbox,
   Select,
+  Textarea,
   useToast,
-  InputGroup,
-  InputRightElement,
 } from "@chakra-ui/react";
-import { Formik, Form, Field } from "formik";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { Field, Form, Formik } from "formik";
+import React from "react";
+import { useSelector } from "react-redux";
 import { BASE_URL } from "../../../constants/BASE_URL";
+import { getCuisines } from "../../../services/apiCuisines";
+import { RootState } from "../../../store/Store";
 
 interface CuisineOption {
   id: string;
   name: string;
 }
 
-// Mock data for cuisines, replace with your actual data source
-const cuisineOptions: CuisineOption[] = [
-  { id: "1", name: "Italian" },
-  { id: "2", name: "Japanese" },
-  // Add more cuisines as needed
-];
-
-interface RestaurantFormValues {
-  name: string;
-  slug: string;
-  location: string;
-  description?: string;
-  photos?: File; // Simplified for demonstration
-  contact_number: string;
-  email: string;
-  website?: string;
-  instagram?: string;
-  telegram?: string;
-  opening_time: string; // Consider using a string for time input and validation
-  closing_time: string;
-  rating: number;
-  is_halal: boolean;
-  cuisines: string[]; // IDs of selected cuisines
-}
-
 const RestaurantForm: React.FC = () => {
   const toast = useToast();
+  const restaurant = useSelector((s: RootState) => s.restaurantInfo);
+  const { data: cuisines } = useQuery({
+    queryKey: ["cusines"],
+    queryFn: () => getCuisines(),
+  });
 
-  const handleSubmit = async (values: RestaurantFormValues) => {
-    console.log(values);
-    await axios.patch(BASE_URL);
-    toast({
-      title: "Form submitted!",
-      description: "Your form has been submitted successfully.",
-      status: "success",
-      duration: 9000,
-      isClosable: true,
-    });
+  const handleSubmit = async (values: any) => {
+    try {
+      const formData = new FormData();
+
+      // Append all form values to the formData object
+      Object.entries(values).forEach(([key, value]) => {
+        if (value !== undefined) {
+          formData.append(
+            key,
+            typeof value === "object" && value !== null ? value : String(value)
+          );
+        }
+      });
+      console.log(values);
+      // Send the form data using axios
+      await axios
+        .put(`${BASE_URL}restaurants/${restaurant?.id}/`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((r) => {
+          console.log(r);
+        });
+
+      toast({
+        title: "Form submitted!",
+        description: "Your form has been submitted successfully.",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast({
+        title: "Error submitting form",
+        description: "Please try again later.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
     <Box p={5}>
       <Formik
-        initialValues={{
-          name: "",
-          slug: "",
-          location: "",
-          description: "",
-          contact_number: "",
-          email: "",
-          website: "",
-          instagram: "",
-          telegram: "",
-          opening_time: "",
-          closing_time: "",
-          rating: 0,
-          is_halal: false,
-          cuisines: [],
-        }}
+        initialValues={restaurant}
         onSubmit={(values, actions) => {
           handleSubmit(values);
           actions.setSubmitting(false);
@@ -109,9 +109,9 @@ const RestaurantForm: React.FC = () => {
               <FormLabel>Photos</FormLabel>
               <input
                 type='file'
-                // onChange={(event) => {
-                //   setFieldValue("photos", event?.currentTarget?.files?[0)
-                // }}
+                onChange={(event) => {
+                  setFieldValue("photos", event.currentTarget.files?.[0]);
+                }}
               />
             </FormControl>
             <FormControl id='contact_number' mt={4}>
@@ -149,7 +149,7 @@ const RestaurantForm: React.FC = () => {
                   id='rating'
                   name='rating'
                   onChange={(evt) =>
-                    setFieldValue("rating", parseFloat(evt.target.value))
+                    setFieldValue("rating", Number(evt.target.value))
                   }
                 />
               </NumberInput>
@@ -158,6 +158,7 @@ const RestaurantForm: React.FC = () => {
             <FormControl id='cuisines' mt={4}>
               <FormLabel>Cuisines</FormLabel>
               <Select
+                height={"200px"}
                 placeholder='Select cuisine'
                 multiple={true}
                 onChange={(evt) =>
@@ -169,7 +170,7 @@ const RestaurantForm: React.FC = () => {
                   )
                 }
               >
-                {cuisineOptions.map((cuisine) => (
+                {cuisines?.map((cuisine: CuisineOption) => (
                   <option key={cuisine.id} value={cuisine.id}>
                     {cuisine.name}
                   </option>

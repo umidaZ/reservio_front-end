@@ -59,9 +59,9 @@ const CreateClientForm = () => {
         <FormLabel>First name</FormLabel>
         <Input
           onChange={(e) => setClient({ ...client, first_name: e.target.value })}
-          placeholder="First name"
+          placeholder='First name'
           value={client.first_name}
-          name="first_name"
+          name='first_name'
           required
         />
       </FormControl>
@@ -69,29 +69,29 @@ const CreateClientForm = () => {
         <FormLabel>Last name</FormLabel>
         <Input
           onChange={(e) => setClient({ ...client, last_name: e.target.value })}
-          placeholder="Last name"
+          placeholder='Last name'
           required
           value={client.last_name}
-          name="last_name"
+          name='last_name'
         />
       </FormControl>
       <FormControl mt={4}>
         <FormLabel>Username</FormLabel>
         <Input
           onChange={(e) => setClient({ ...client, username: e.target.value })}
-          placeholder="Username"
+          placeholder='Phone number'
           required
           value={client.username}
-          name="phone_number"
+          name='phone_number'
         />
       </FormControl>
       <FormControl mt={4}>
         <FormLabel>Email</FormLabel>
         <Input
           onChange={(e) => setClient({ ...client, email: e.target.value })}
-          placeholder="Email"
-          type="email"
-          name="email"
+          placeholder='Email'
+          type='email'
+          name='email'
           required
           value={client.email}
         />
@@ -102,55 +102,55 @@ const CreateClientForm = () => {
           onChange={(e) =>
             setClient({ ...client, phone_number: e.target.value })
           }
-          placeholder="Phone number"
+          placeholder='Phone number'
           required
           value={client.phone_number}
-          name="phone_number"
+          name='phone_number'
         />
       </FormControl>
       <FormControl mt={4}>
         <FormLabel>Date of birth</FormLabel>
         <Input
           onChange={(e) => setClient({ ...client, birth_date: e.target.value })}
-          placeholder="Birth Date"
-          type="date"
+          placeholder='Birth Date'
+          type='date'
           required
           value={client?.birth_date}
-          name="phone_number"
+          name='phone_number'
         />
       </FormControl>
       <FormLabel mt={4}>Password</FormLabel>
-      <InputGroup size="md">
+      <InputGroup size='md'>
         <Input
-          pr="4.5rem"
+          pr='4.5rem'
           onChange={(e) => setClient({ ...client, password: e.target.value })}
           type={show ? "text" : "password"}
           value={client.password}
-          placeholder="Enter password"
+          placeholder='Enter password'
         />
-        <InputRightElement width="4.5rem">
-          <Button h="1.75rem" size="sm" onClick={handleClick}>
+        <InputRightElement width='4.5rem'>
+          <Button h='1.75rem' size='sm' onClick={handleClick}>
             {show ? "Hide" : "Show"}
           </Button>
         </InputRightElement>
       </InputGroup>
       <FormLabel mt={4}>Confirm password</FormLabel>
-      <InputGroup size="md">
+      <InputGroup size='md'>
         <Input
-          pr="4.5rem"
+          pr='4.5rem'
           onChange={(e) => setClient({ ...client, confirm: e.target.value })}
           type={show ? "text" : "password"}
           value={client.confirm}
-          placeholder="Confirm password"
+          placeholder='Confirm password'
         />
-        <InputRightElement width="4.5rem">
-          <Button h="1.75rem" size="sm" onClick={handleClick}>
+        <InputRightElement width='4.5rem'>
+          <Button h='1.75rem' size='sm' onClick={handleClick}>
             {show ? "Hide" : "Show"}
           </Button>
         </InputRightElement>
       </InputGroup>
       <FormControl mt={4}>
-        <input type="checkbox" onChange={(e) => setAgree(e.target.checked)} />{" "}
+        <input type='checkbox' onChange={(e) => setAgree(e.target.checked)} />{" "}
         Accept Terms & Conditions
       </FormControl>
       {agree && (
@@ -158,8 +158,8 @@ const CreateClientForm = () => {
           onClick={handleRegister}
           width={"100%"}
           isLoading={isLoading}
-          loadingText="Creating your account..."
-          colorScheme="green"
+          loadingText='Creating your account...'
+          colorScheme='green'
           mt={4}
         >
           Register

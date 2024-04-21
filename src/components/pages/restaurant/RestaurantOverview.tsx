@@ -9,22 +9,22 @@ import {
   Card,
   Divider,
   Flex,
-  Heading,
   Img,
   Stack,
   Tag,
   Text,
 } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
 import { CiForkAndKnife, CiMoneyBill } from "react-icons/ci";
 import { MdOutlineReviews } from "react-icons/md";
-import { useQuery } from "@tanstack/react-query";
 import ReactStars from "react-rating-stars-component";
 import { useLocation, useParams } from "react-router-dom";
 import halal from "../../../../public/halal.png";
 import { RestaurantState } from "../../../features/restaurantSlice";
 import { getRestaurantReviews } from "../../../services/apiGetRestaurantReviews";
-import ReviewForm from "./RestaurantReviews";
 import NoDataFound from "../ui/NoDataFound";
+import ReviewForm from "./RestaurantReviews";
+import { getCuisines } from "../../../services/apiCuisines";
 
 const RestaurantOverview = ({ data }: any) => {
   const l: RestaurantState = useLocation().state;
@@ -34,7 +34,11 @@ const RestaurantOverview = ({ data }: any) => {
     queryKey: ["reviews"],
     queryFn: () => getRestaurantReviews(restaurantId),
   });
-  console.log({ reviewList });
+  const { data: c } = useQuery({
+    queryKey: ["cuisines"],
+    queryFn: () => getCuisines(),
+  });
+
   return (
     <Box>
       <Text fontWeight={"bold"} fontSize={[13, 24, 26]}>
@@ -66,8 +70,11 @@ const RestaurantOverview = ({ data }: any) => {
           <Flex alignItems={"center"}>
             <CiForkAndKnife size={24} />
             <Text pl={2}>
-              {cuisines?.map((i) => i.name).join(", ") ||
-                "- Cuisines not specified"}
+              {console.log(cuisines)}
+              {c
+                ?.filter((e) => e.id == cuisines[0])
+                ?.map((i) => i.name)
+                .join(", ") || "- Cuisines not specified"}
             </Text>
           </Flex>
         </Flex>
