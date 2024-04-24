@@ -1,18 +1,13 @@
 import { Text, VStack } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import ReviewComponent, { Reply, Review } from "./ReviewComponent";
+import ReviewComponent, { Review, ReviewReply } from "./ReviewComponent";
 import { getRestaurantReviews } from "../../../../../services/apiGetRestaurantReviews";
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { BASE_URL } from "../../../../../constants/BASE_URL";
 
 // Example reviews data
-const initialReviews: Review[] = [
-  {
-    id: "1",
-    text: "Great service! ♥️",
-    replies: [],
-  },
-  // Add more reviews
-];
+const initialReviews: Review[] = [];
 
 const ReviewsPage: React.FC = () => {
   const [reviews, setReviews] = useState<Review[]>(initialReviews);
@@ -23,23 +18,42 @@ const ReviewsPage: React.FC = () => {
         JSON.parse(localStorage.getItem("restaurant")!).restaurant
       ),
   });
+  console.log(reviewsList);
   useEffect(() => {
     window.localStorage.setItem("reviews", JSON.stringify(reviewsList));
     setReviews(reviewsList);
   }, [reviewsList]);
 
-  const handleReply = (reviewId: string, replyText: string) => {
+  const handleReply = async (reviewId: string, replyText: string) => {
     const updatedReviews = reviews.map((review) => {
       if (review.id === reviewId) {
-        const newReply: Reply = { id: Date.now().toString(), text: replyText };
-        const updatedReplies = review?.replies
-          ? [...review.replies, newReply]
+        const newReply: ReviewReply = {
+          reply_text: replyText,
+        };
+        const updatedReplies = review?.review_replies
+          ? [...review.review_replies, newReply]
           : [newReply];
         return { ...review, replies: updatedReplies };
       }
       return review;
     });
     setReviews(updatedReviews);
+    await axios
+      .post(
+        BASE_URL +
+          `restaurants/${
+            JSON.parse(localStorage.getItem("restaurantInfo")!)?.id
+          }/reviews/${reviewId}/review_reply/`,
+        {
+          reply_text: replyText,
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
     // Additionally, send the reply to your backend
   };
 

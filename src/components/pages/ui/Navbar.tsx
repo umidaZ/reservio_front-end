@@ -50,9 +50,11 @@ const Navbar = () => {
           )}
           {token ? (
             <Button
+              colorScheme='red'
               onClick={() => {
                 dispatch(logout());
                 localStorage.clear();
+                window.location.href = "/";
                 setTimeout(() => {
                   window.location.reload();
                 }, 1000);

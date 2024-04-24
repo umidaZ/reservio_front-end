@@ -49,6 +49,7 @@ export const restaurantInfoSlice = createSlice({
   initialState,
   reducers: {
     setRestaurantInfo: (state, action: PayloadAction<Restaurant>) => {
+      console.log(state);
       window.localStorage.setItem(
         "restaurantInfo",
         JSON.stringify(action.payload)

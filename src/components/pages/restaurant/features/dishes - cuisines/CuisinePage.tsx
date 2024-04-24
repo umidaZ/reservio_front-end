@@ -1,15 +1,14 @@
-import React, { useState } from "react";
 import {
   Box,
-  Input,
   Button,
-  VStack,
-  HStack,
-  useToast,
   Flex,
+  Input,
   Text,
+  useToast,
+  VStack,
 } from "@chakra-ui/react";
 import axios from "axios";
+import React, { useState } from "react";
 import { BASE_URL } from "../../../../../constants/BASE_URL";
 
 interface Cuisine {

@@ -10,19 +10,26 @@ import { useQuery } from "@tanstack/react-query";
 import Loader from "../components/pages/ui/Loader";
 import NoDataFound from "../components/pages/ui/NoDataFound";
 import { getRestaurants } from "../services/apiGetRestaurant";
+import { useEffect, useState } from "react";
 
 const RestaurantLayout = () => {
-  const { data, isLoading, isError } = useQuery({
+  const { data: d, isLoading } = useQuery({
     queryKey: ["restaurants"],
     queryFn: getRestaurants,
   });
-  console.log(data, isError, isLoading);
+
+  const [data, setData] = useState([]);
+  const [tempData, setTempData] = useState(d?.results);
+  useEffect(() => {
+    setData(d?.results);
+    setTempData(d?.results);
+  }, [isLoading, d?.results]);
   return (
     <Box>
       <Navbar />
-      <Hero />
-      {/* <TopRestaurants /> */}
-      {data?.results?.length !== 0 && (
+      <Hero data={data} setData={setData} tempData={tempData} />
+
+      {data?.length !== 0 && (
         <Text
           fontWeight={"bolder"}
           fontSize={[18, 25, 35]}
@@ -34,7 +41,7 @@ const RestaurantLayout = () => {
         </Text>
       )}
       {isLoading && <Loader />}
-      {data?.results?.length === 0 && (
+      {data?.length === 0 && (
         <NoDataFound colorScheme='yellow' text='No  restaurants found.' />
       )}
       <Box
@@ -47,7 +54,7 @@ const RestaurantLayout = () => {
           "repeat(auto-fill, minmax(700px, 1fr))",
         ]}
       >
-        {data?.results?.map((item: any, index: number) => {
+        {data?.map((item: any, index: number) => {
           console.log({ item });
           return (
             <RestaurantCard

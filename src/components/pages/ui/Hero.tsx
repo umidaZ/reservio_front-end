@@ -1,12 +1,12 @@
-import { Box, Button, Divider, Text, useToast } from "@chakra-ui/react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Box, Button, Divider, Input, Text, useToast } from "@chakra-ui/react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { search, SearchState } from "../../../features/searchSlice";
 import Filter from "./Filter";
 import PeopleCounter from "./PeopleCounter";
-import { useDispatch } from "react-redux";
-import { search } from "../../../features/searchSlice";
-import { useState } from "react";
-import { SearchState } from "../../../features/searchSlice";
 
-const Hero = () => {
+const Hero = ({ data, setData, tempData }: any) => {
   const dispatch = useDispatch();
   const [userSearch, setUserSearch] = useState<SearchState>({
     date: "",
@@ -87,11 +87,34 @@ const Hero = () => {
           alignItems={"center"}
           mt={10}
         >
-          <Filter
-            type='text'
-            onChange={(e) => setUserSearch({ ...userSearch, others: e })}
+          <Input
+            backgroundColor={"white"}
+            onChange={(e) => {
+              setUserSearch({ ...userSearch, others: e.target.value });
+              const filtered =
+                data?.filter((r: any) => {
+                  return (
+                    r.name
+                      .toLowerCase()
+                      .includes(e.target.value.toLowerCase()) ||
+                    r.location
+                      .toLowerCase()
+                      .includes(e.target.value.toLowerCase())
+                  );
+                }) || [];
+              setData(filtered);
+              console.log({ o: userSearch.others });
+              if (!e.target.value) {
+                console.log("empty");
+                setData(tempData);
+              }
+            }}
             placeholder='Location, Restaurant, or Cuisine'
-          />{" "}
+            size='lg'
+            my={2}
+            type={"text"}
+          />
+
           <Divider orientation='vertical' />
         </Box>
         <Box

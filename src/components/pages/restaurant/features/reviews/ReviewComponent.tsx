@@ -1,13 +1,22 @@
 export interface Review {
   id: string;
-  text: string;
-  replies?: Reply[];
+  restaurant: number;
+  customer: string;
+  rating: number;
+  comment: string;
+  timestamp: string;
+  review_replies: ReviewReply[];
 }
 
-export interface Reply {
-  id: string;
-  text: string;
+export interface ReviewReply {
+  id?: number | string;
+  restaurant?: number;
+  customer?: number;
+  review?: number;
+  reply_text: string;
+  timestamp?: string;
 }
+
 import {
   Box,
   VStack,
@@ -32,10 +41,10 @@ interface ReviewProps {
 
 const ReviewComponent: React.FC<ReviewProps> = ({ review, onReply }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [replyText, setReplyText] = useState("");
+  const [reply_text, setReplyText] = useState("");
 
   const handleReply = () => {
-    onReply(review.id, replyText);
+    onReply(review.id, reply_text);
     setReplyText("");
     onClose();
   };
@@ -50,11 +59,13 @@ const ReviewComponent: React.FC<ReviewProps> = ({ review, onReply }) => {
       spacing={4}
     >
       <Text fontWeight='bold'>Review:</Text>
-      <Text>Abdulboriy M: {review.text}</Text>
-      {review.replies?.length !== 0 &&
-        review.replies?.map((reply) => (
+      <Text>
+        {review.customer}: {review.comment}
+      </Text>
+      {review.review_replies?.length !== 0 &&
+        review.review_replies?.map((reply) => (
           <Box key={reply.id} pl={4}>
-            <Text fontSize='sm'>Reply: {reply.text}</Text>
+            <Text fontSize='sm'>Reply: {reply.reply_text}</Text>
           </Box>
         ))}
       <Button size='sm' onClick={onOpen}>
@@ -69,7 +80,7 @@ const ReviewComponent: React.FC<ReviewProps> = ({ review, onReply }) => {
           <ModalBody>
             <Input
               placeholder='Type your reply here...'
-              value={replyText}
+              value={reply_text}
               onChange={(e) => setReplyText(e.target.value)}
             />
           </ModalBody>

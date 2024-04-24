@@ -7,13 +7,13 @@ import {
   Textarea,
   useToast,
 } from "@chakra-ui/react";
+import { useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { BASE_URL } from "../../../constants/BASE_URL";
-import { useSelector } from "react-redux";
 import { RootState } from "../../../store/Store";
-import { useQueryClient } from "@tanstack/react-query";
 import NoDataFound from "../ui/NoDataFound";
 
 interface Review {
@@ -63,7 +63,7 @@ const ReviewForm = () => {
     setReview({
       rating: 0,
       comment: "",
-      customer: id,
+      customer: 0,
     });
   };
 

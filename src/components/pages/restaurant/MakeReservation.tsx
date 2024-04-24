@@ -19,8 +19,8 @@ import { BASE_URL } from "../../../constants/BASE_URL";
 import { getTables } from "../../../services/apiGetTables";
 import { RootState } from "../../../store/Store";
 import Filter from "../ui/Filter";
-import PeopleCounter from "../ui/PeopleCounter";
 import NoDataFound from "../ui/NoDataFound";
+import PeopleCounter from "../ui/PeopleCounter";
 
 const MakeReservation = () => {
   const toast = useToast();
@@ -32,6 +32,7 @@ const MakeReservation = () => {
     queryFn: () => getTables(restaurantId!),
   });
   const { customer } = useSelector((s: RootState) => s.user);
+  console.log(customer);
   const [reserved, setReserved] = useState(data);
   const [reservationData, setReservationData] = useState({
     table: reserved?.id,
@@ -81,7 +82,7 @@ const MakeReservation = () => {
               return (
                 <option key={i} value={e.id}>
                   {" "}
-                  Table #{e.number}
+                  Table #{e.number} - {e.capacity} seats
                 </option>
               );
             })}
@@ -187,6 +188,10 @@ const MakeReservation = () => {
               w={"100%"}
               colorScheme='red'
               onClick={async () => {
+                console.log({
+                  ...reservationData,
+                  table: reserved?.id,
+                });
                 await axios
                   .post(
                     BASE_URL + `reservations/`,

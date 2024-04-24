@@ -6,7 +6,6 @@
 import {
   Avatar,
   Box,
-  Card,
   Divider,
   Flex,
   Img,
@@ -21,15 +20,15 @@ import ReactStars from "react-rating-stars-component";
 import { useLocation, useParams } from "react-router-dom";
 import halal from "../../../../public/halal.png";
 import { RestaurantState } from "../../../features/restaurantSlice";
-import { getRestaurantReviews } from "../../../services/apiGetRestaurantReviews";
-import NoDataFound from "../ui/NoDataFound";
-import ReviewForm from "./RestaurantReviews";
 import { getCuisines } from "../../../services/apiCuisines";
+import { getRestaurantReviews } from "../../../services/apiGetRestaurantReviews";
+import MenuItemsForRestaurant from "./features/menu/MenuItemsForRestaurant";
+import ReviewForm from "./RestaurantReviews";
 
 const RestaurantOverview = ({ data }: any) => {
   const l: RestaurantState = useLocation().state;
   const { restaurantId } = useParams();
-  const { name, rating, reviews, cuisines, topDishes, photos, is_halal } = l;
+  const { name, rating, reviews, cuisines, is_halal } = l;
   const { data: reviewList } = useQuery({
     queryKey: ["reviews"],
     queryFn: () => getRestaurantReviews(restaurantId),
@@ -95,84 +94,9 @@ const RestaurantOverview = ({ data }: any) => {
       <Text fontSize={18} color={"gray.800"}>
         Top Dishes:{" "}
       </Text>
+      <MenuItemsForRestaurant />
       <Divider my={5} orientation='horizontal' />
-      {topDishes ? (
-        <Box maxH={"300px"} overflowY={"scroll"}>
-          <Card p={3}>
-            <Flex gap={5}>
-              <Img
-                width={"200px"}
-                src='https://www.advantour.com/img/uzbekistan/uzbek-dishes.jpg'
-              />
-              <Box pt={2}>
-                <Text fontWeight={"bold"} fontSize={16}>
-                  Somsa
-                </Text>
-                <Text fontWeight={"bold"} fontSize={16}>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Sapiente cupiditate tenetur reprehenderit possimus
-                </Text>
-                <Text fontWeight={"bold"} fontSize={16}>
-                  Somsa
-                </Text>
-                <Text fontWeight={"bold"} fontSize={16}>
-                  Somsa
-                </Text>
-              </Box>
-            </Flex>
-          </Card>
-          <Card p={3}>
-            <Flex gap={5}>
-              <Img
-                width={"200px"}
-                src='https://www.advantour.com/img/uzbekistan/uzbek-dishes.jpg'
-              />
-              <Box pt={2}>
-                <Text fontWeight={"bold"} fontSize={16}>
-                  Somsa
-                </Text>
-                <Text fontWeight={"bold"} fontSize={16}>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Sapiente cupiditate tenetur reprehenderit possimus
-                </Text>
-                <Text fontWeight={"bold"} fontSize={16}>
-                  Somsa
-                </Text>
-                <Text fontWeight={"bold"} fontSize={16}>
-                  Somsa
-                </Text>
-              </Box>
-            </Flex>
-          </Card>
-          <Card p={3}>
-            <Flex gap={5}>
-              <Img
-                width={"200px"}
-                src='https://www.advantour.com/img/uzbekistan/uzbek-dishes.jpg'
-              />
-              <Box pt={2}>
-                <Text fontWeight={"bold"} fontSize={16}>
-                  Somsa
-                </Text>
-                <Text fontWeight={"bold"} fontSize={16}>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Sapiente cupiditate tenetur reprehenderit possimus
-                </Text>
-                <Text fontWeight={"bold"} fontSize={16}>
-                  Somsa
-                </Text>
-                <Text fontWeight={"bold"} fontSize={16}>
-                  Somsa
-                </Text>
-              </Box>
-            </Flex>
-          </Card>
-        </Box>
-      ) : (
-        <NoDataFound colorScheme='yellow' text='No data found' />
-      )}
-      <Divider my={5} orientation='horizontal' />
-      <Text my={10} fontSize={[18, 25]} color={"gray.800"}>
+      {/* <Text my={10} fontSize={[18, 25]} color={"gray.800"}>
         Photos
       </Text>
       <Box
@@ -187,11 +111,11 @@ const RestaurantOverview = ({ data }: any) => {
           gridRowStart={1}
           src={photos}
         />
-        {/* <Img src='https://www.advantour.com/img/uzbekistan/uzbek-dishes.jpg' />
         <Img src='https://www.advantour.com/img/uzbekistan/uzbek-dishes.jpg' />
         <Img src='https://www.advantour.com/img/uzbekistan/uzbek-dishes.jpg' />
-        <Img src='https://www.advantour.com/img/uzbekistan/uzbek-dishes.jpg' /> */}
-      </Box>
+        <Img src='https://www.advantour.com/img/uzbekistan/uzbek-dishes.jpg' />
+        <Img src='https://www.advantour.com/img/uzbekistan/uzbek-dishes.jpg' />
+      </Box> */}
       <Divider my={5} orientation='horizontal' />
 
       <ReviewForm />

@@ -12,20 +12,16 @@ import {
   ListItem,
   Text,
 } from "@chakra-ui/react";
-import { CiMenuFries } from "react-icons/ci";
-import { IoIosExit } from "react-icons/io";
-import { MdDashboard, MdOutlineReviews } from "react-icons/md";
-import { SiGoogledocs } from "react-icons/si";
-import ReactStars from "react-rating-stars-component";
-import Navbar from "../components/pages/ui/Navbar";
-import { CiViewTable } from "react-icons/ci";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { CiMenuFries, CiViewTable } from "react-icons/ci";
+import { MdDashboard, MdOutlineReviews } from "react-icons/md";
+import ReactStars from "react-rating-stars-component";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import Navbar from "../components/pages/ui/Navbar";
 import { setRestaurantInfo } from "../features/restaurantInfoSlice";
 import { getRestaurantByID } from "../services/apiGetRestaurantById";
-import ReviewsPage from "../components/pages/restaurant/features/reviews/ReviewsPage";
 
 const UserDashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useDispatch();
@@ -116,6 +112,12 @@ const UserDashboardLayout = ({ children }: { children: React.ReactNode }) => {
                 </Link>
               </ListItem>
               <ListItem cursor={"pointer"} className='shadow' padding={2}>
+                <Link to='/restaurant/user-dashboard/menuCategory'>
+                  <ListIcon as={CiMenuFries} color='green.500' />
+                  Category Builder
+                </Link>
+              </ListItem>
+              <ListItem cursor={"pointer"} className='shadow' padding={2}>
                 <Link to='/restaurant/user-dashboard/tablesPage'>
                   <ListIcon as={CiViewTable} color='green.500' />
                   Table management
@@ -127,16 +129,6 @@ const UserDashboardLayout = ({ children }: { children: React.ReactNode }) => {
                   <ListIcon as={MdOutlineReviews} color='green.500' />
                   Reviews
                 </Link>
-              </ListItem>
-              <ListItem cursor={"pointer"} className='shadow' padding={2}>
-                <Link to='/restaurant/user-dashboard/transactions'>
-                  <ListIcon as={SiGoogledocs} color='green.500' />
-                  Transactions
-                </Link>
-              </ListItem>
-              <ListItem cursor={"pointer"} className='shadow' padding={2}>
-                <ListIcon as={IoIosExit} color='green.500' />
-                Sign out
               </ListItem>
             </List>
           </GridItem>

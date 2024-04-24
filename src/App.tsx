@@ -1,18 +1,18 @@
-import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import RestaurantLayout from "./layout/RestaurantLayout";
-import RestaurantPage from "./components/pages/restaurant/RestaurantPage";
-import UserDashboardLayout from "./layout/UserDashboardLayout";
-import Orders from "./components/pages/restaurant/features/orders/Orders";
-import RestaurantForm from "./components/pages/restaurant/RestaurantForm";
-import RestaurantMenuBuilder from "./components/pages/restaurant/features/menu/MenuBuilder";
-import TransactionsTable from "./components/pages/restaurant/features/transactions/TransactionsTable";
-import CuisinePage from "./components/pages/restaurant/features/dishes - cuisines/CuisinePage";
-import ReviewsPage from "./components/pages/restaurant/features/reviews/ReviewsPage";
-import UpdateClientProfilePage from "./components/pages/clients/UpdateClientProfilePage";
-import UpdateRestaurantForm from "./components/pages/restaurant/update/UpdateRestaurantForm";
+import "./App.css";
 import ReservationList from "./components/pages/clients/ReservationList";
+import UpdateClientProfilePage from "./components/pages/clients/UpdateClientProfilePage";
+import RestaurantMenuBuilder from "./components/pages/restaurant/features/menu/MenuBuilder";
+import MenuCategoryCreator from "./components/pages/restaurant/features/menu/MenuCategoryCreator";
+import Orders from "./components/pages/restaurant/features/orders/Orders";
+import ReviewsPage from "./components/pages/restaurant/features/reviews/ReviewsPage";
 import TablesPage from "./components/pages/restaurant/features/tables/TablesPage";
+import TransactionsTable from "./components/pages/restaurant/features/transactions/TransactionsTable";
+import RestaurantForm from "./components/pages/restaurant/RestaurantForm";
+import RestaurantPage from "./components/pages/restaurant/RestaurantPage";
+import UpdateRestaurantForm from "./components/pages/restaurant/update/UpdateRestaurantForm";
+import RestaurantLayout from "./layout/RestaurantLayout";
+import UserDashboardLayout from "./layout/UserDashboardLayout";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -48,6 +48,14 @@ const router = createBrowserRouter([
     path: "/restaurant/user-dashboard/reviews",
     element: (
       <UserDashboardLayout children={<ReviewsPage />}></UserDashboardLayout>
+    ),
+  },
+  {
+    path: "/restaurant/user-dashboard/menuCategory",
+    element: (
+      <UserDashboardLayout
+        children={<MenuCategoryCreator />}
+      ></UserDashboardLayout>
     ),
   },
   {

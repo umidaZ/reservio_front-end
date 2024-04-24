@@ -1,15 +1,10 @@
-import { ChevronDownIcon, Search2Icon } from "@chakra-ui/icons";
+import { Search2Icon } from "@chakra-ui/icons";
 import {
   Badge,
-  Button,
   Flex,
   Input,
   InputGroup,
   InputRightElement,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Select,
   Table,
   TableCaption,
@@ -20,14 +15,12 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import { QueryClient, useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
-import { reservations } from "../../../../../constants/restaurants";
-import useDynamicSearch from "../../../../../hooks/useDynamicSearch";
-import { getRestaurantByID } from "../../../../../services/apiGetRestaurantById";
-import { getAdminReservations } from "../../../../../services/apiAdminGetReservations";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useEffect } from "react";
 import { BASE_URL } from "../../../../../constants/BASE_URL";
+import { getAdminReservations } from "../../../../../services/apiAdminGetReservations";
+import { getRestaurantByID } from "../../../../../services/apiGetRestaurantById";
 
 interface Reservation {
   id: number;
@@ -66,7 +59,6 @@ function getOrderStatusBadge(status: string) {
   );
 }
 const Orders = () => {
-  const qc = new QueryClient();
   const { data: restaurant } = useQuery({
     queryKey: ["admin/restaurantById"],
     queryFn: () =>
@@ -90,11 +82,7 @@ const Orders = () => {
     <>
       <Flex my={3}>
         <InputGroup>
-          <Input
-            type='search'
-            onChange={(e) => searchItems(e.target.value)}
-            placeholder='Basic usage'
-          />{" "}
+          <Input type='search' placeholder='Basic usage' />{" "}
           <InputRightElement>
             <Search2Icon />
           </InputRightElement>
