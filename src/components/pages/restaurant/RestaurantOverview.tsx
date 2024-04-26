@@ -44,7 +44,7 @@ const RestaurantOverview = ({ data }: any) => {
         {name} {rating || " - No rating yet"}
       </Text>
       {is_halal && <Img src={halal} width={"100px"} />}
-      <Divider my={5} orientation='horizontal' />
+      <Divider my={5} orientation="horizontal" />
       <Flex alignItems={"center"} gap={10}>
         <Flex alignItems={"center"} gap={2}>
           <ReactStars
@@ -53,7 +53,7 @@ const RestaurantOverview = ({ data }: any) => {
             size={24}
             isHalf={true}
             edit={false}
-            activeColor='#DA3743'
+            activeColor="#DA3743"
           />{" "}
           <Text fontWeight={"bold"} mt={0}>
             {rating || " - No rating yet"}
@@ -78,7 +78,7 @@ const RestaurantOverview = ({ data }: any) => {
           </Flex>
         </Flex>
       </Flex>
-      <Divider my={5} orientation='horizontal' />
+      <Divider my={5} orientation="horizontal" />
       <Flex gap={5} alignItems={"center"}>
         <Text fontSize={16} color={"gray.500"}>
           Top Tags:{" "}
@@ -90,12 +90,12 @@ const RestaurantOverview = ({ data }: any) => {
           Vegan Options
         </Tag>
       </Flex>
-      <Divider my={5} orientation='horizontal' />
+      <Divider my={5} orientation="horizontal" />
       <Text fontSize={18} color={"gray.800"}>
         Top Dishes:{" "}
       </Text>
       <MenuItemsForRestaurant />
-      <Divider my={5} orientation='horizontal' />
+      <Divider my={5} orientation="horizontal" />
       {/* <Text my={10} fontSize={[18, 25]} color={"gray.800"}>
         Photos
       </Text>
@@ -116,16 +116,16 @@ const RestaurantOverview = ({ data }: any) => {
         <Img src='https://www.advantour.com/img/uzbekistan/uzbek-dishes.jpg' />
         <Img src='https://www.advantour.com/img/uzbekistan/uzbek-dishes.jpg' />
       </Box> */}
-      <Divider my={5} orientation='horizontal' />
+      <Divider my={5} orientation="horizontal" />
 
       <ReviewForm />
       <Stack my={3} spacing={4}>
         {reviewList?.map((value, index) => {
           return (
-            <Box key={index} p={5} shadow='md' borderWidth='1px'>
-              <Flex alignItems='center'>
-                <Avatar size='sm' src='https://bit.ly/broken-link' />
-                <Text ml={3} fontWeight='bold'>
+            <Box key={index} p={5} shadow="md" borderWidth="1px">
+              <Flex alignItems="center">
+                <Avatar size="sm" src="https://bit.ly/broken-link" />
+                <Text ml={3} fontWeight="bold">
                   {value?.customer}
                 </Text>
               </Flex>
@@ -136,8 +136,28 @@ const RestaurantOverview = ({ data }: any) => {
                 size={24}
                 isHalf={true}
                 edit={false}
-                activeColor='#DA3743'
+                activeColor="#DA3743"
               />{" "}
+              {value?.review_replies?.length > 0 && (
+                <Box my={5}>
+                  <Divider my={5} orientation="horizontal" />
+
+                  <Text>Replies:</Text>
+                  <Box pl={5} my={4}>
+                    {value?.review_replies?.map((e, i) => {
+                      return (
+                        <Flex key={i} alignItems={"center"}>
+                          <Avatar size="sm" name="Restaurant Owner" />{" "}
+                          <Text ml={3} fontWeight="bold">
+                            {e?.reply_text}
+                          </Text>
+                        </Flex>
+                      );
+                    })}
+                  </Box>
+                  <Divider my={5} orientation="horizontal" />
+                </Box>
+              )}
             </Box>
           );
         })}
