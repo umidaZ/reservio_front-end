@@ -92,20 +92,20 @@ const ReservationCard = ({ reservation }: { reservation: Reservation }) => {
       textAlign={"center"}
       bg={"#88AB8E"}
       color={"white"}
-      boxShadow='md'
-      borderRadius='lg'
-      p='10'
-      m='4'
+      boxShadow="md"
+      borderRadius="lg"
+      p="10"
+      m="4"
       rounded={20}
     >
       <br />
-      <Text fontSize='lg'>Reservation ID: {reservation.id}</Text>
+      <Text fontSize="lg">Reservation ID: {reservation.id}</Text>
       <Editable defaultValue={`Date: ${reservation.date}`}>
         <EditablePreview />
         <EditableInput
           onBlur={handleSubmit}
-          type='date'
-          name='date'
+          type="date"
+          name="date"
           backgroundColor={"white"}
           color={"green"}
           onChange={handleChange}
@@ -117,8 +117,8 @@ const ReservationCard = ({ reservation }: { reservation: Reservation }) => {
           onBlur={handleSubmit}
           backgroundColor={"white"}
           color={"green"}
-          type='number'
-          name='num_guests'
+          type="number"
+          name="num_guests"
           onChange={handleChange}
         />
       </Editable>
@@ -129,8 +129,8 @@ const ReservationCard = ({ reservation }: { reservation: Reservation }) => {
           onBlur={handleSubmit}
           backgroundColor={"white"}
           color={"green"}
-          type='time'
-          name='start_time'
+          type="time"
+          name="start_time"
           onChange={handleChange}
         />
       </Editable>
@@ -141,8 +141,8 @@ const ReservationCard = ({ reservation }: { reservation: Reservation }) => {
           onBlur={handleSubmit}
           backgroundColor={"white"}
           color={"green"}
-          type='time'
-          name='end_time'
+          type="time"
+          name="end_time"
           onChange={handleChange}
         />
       </Editable>
@@ -155,8 +155,8 @@ const ReservationCard = ({ reservation }: { reservation: Reservation }) => {
           onBlur={handleSubmit}
           backgroundColor={"white"}
           color={"green"}
-          name='special_requests'
-          type='text'
+          name="special_requests"
+          type="text"
           onChange={handleChange}
         />
       </Editable>
@@ -192,8 +192,8 @@ const ReservationList = () => {
       {isLoading && <Loader />}
       {reservations?.data?.length === 0 && (
         <NoDataFound
-          colorScheme='yellow'
-          text='You do not have any reservations so far'
+          colorScheme="yellow"
+          text="You do not have any reservations so far"
         />
       )}
       <Grid gridTemplateColumns={`repeat(auto-fit, minmax(250px, 1fr))`}>

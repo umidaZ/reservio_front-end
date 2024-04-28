@@ -52,7 +52,7 @@ const UserDashboardLayout = ({ children }: { children: React.ReactNode }) => {
         justifyContent={"center"}
         alignItems={"center"}
       >
-        <Box padding={5} display={"flex"} className='blur' width={"80%"}>
+        <Box padding={5} display={"flex"} className="blur" width={"80%"}>
           <img
             width={"200px"}
             src={
@@ -60,7 +60,7 @@ const UserDashboardLayout = ({ children }: { children: React.ReactNode }) => {
                 ? restaurant?.photos
                 : "https://foodbakery.pixfill.com/wp-content/uploads/2022/08/fb-restaurant-10-1-1.png"
             }
-            alt=''
+            alt=""
           />
           <Box display={"flex"} flexDirection={"column"} gap={2} mx={10}>
             <Text color={"white"} fontSize={[18, 25, 30]}>
@@ -75,13 +75,13 @@ const UserDashboardLayout = ({ children }: { children: React.ReactNode }) => {
               size={24}
               isHalf={true}
               edit={false}
-              activeColor='#DA3743'
-              color='white'
+              activeColor="#DA3743"
+              color="white"
             />{" "}
           </Box>
         </Box>
       </Box>
-      <Divider my={10} orientation='horizontal' />
+      <Divider my={10} orientation="horizontal" />
 
       <Container maxW={["98%", "90%"]}>
         <Grid gap={5} gridTemplateAreas={`"sidebar table table table"`}>
@@ -89,44 +89,44 @@ const UserDashboardLayout = ({ children }: { children: React.ReactNode }) => {
             padding={5}
             minH={"50vh"}
             minW={"250px"}
-            className='shadow'
+            className="shadow"
             gridArea={"sidebar"}
           >
             <List spacing={5}>
-              <ListItem cursor={"pointer"} className='shadow' padding={2}>
+              <ListItem cursor={"pointer"} className="shadow" padding={2}>
                 <Link to={"/restaurant/user-dashboard/dashboard-orders"}>
-                  <ListIcon as={MdDashboard} color='green.500' />
+                  <ListIcon as={MdDashboard} color="green.500" />
                   Dashboard
                 </Link>
               </ListItem>
-              <ListItem cursor={"pointer"} className='shadow' padding={2}>
+              <ListItem cursor={"pointer"} className="shadow" padding={2}>
                 <Link to={"/restaurant/user-dashboard/restaurant-details"}>
-                  <ListIcon as={MdDashboard} color='green.500' />
+                  <ListIcon as={MdDashboard} color="green.500" />
                   Restaurant Details
                 </Link>
               </ListItem>
-              <ListItem cursor={"pointer"} className='shadow' padding={2}>
-                <Link to='/restaurant/user-dashboard/menu-builder'>
-                  <ListIcon as={CiMenuFries} color='green.500' />
+              <ListItem cursor={"pointer"} className="shadow" padding={2}>
+                <Link to="/restaurant/user-dashboard/menu-builder">
+                  <ListIcon as={CiMenuFries} color="green.500" />
                   Menu Builder
                 </Link>
               </ListItem>
-              <ListItem cursor={"pointer"} className='shadow' padding={2}>
-                <Link to='/restaurant/user-dashboard/menuCategory'>
-                  <ListIcon as={CiMenuFries} color='green.500' />
+              <ListItem cursor={"pointer"} className="shadow" padding={2}>
+                <Link to="/restaurant/user-dashboard/menuCategory">
+                  <ListIcon as={CiMenuFries} color="green.500" />
                   Category Builder
                 </Link>
               </ListItem>
-              <ListItem cursor={"pointer"} className='shadow' padding={2}>
-                <Link to='/restaurant/user-dashboard/tablesPage'>
-                  <ListIcon as={CiViewTable} color='green.500' />
+              <ListItem cursor={"pointer"} className="shadow" padding={2}>
+                <Link to="/restaurant/user-dashboard/tablesPage">
+                  <ListIcon as={CiViewTable} color="green.500" />
                   Table management
                 </Link>
               </ListItem>
 
-              <ListItem cursor={"pointer"} className='shadow' padding={2}>
-                <Link to='/restaurant/user-dashboard/reviews'>
-                  <ListIcon as={MdOutlineReviews} color='green.500' />
+              <ListItem cursor={"pointer"} className="shadow" padding={2}>
+                <Link to="/restaurant/user-dashboard/reviews">
+                  <ListIcon as={MdOutlineReviews} color="green.500" />
                   Reviews
                 </Link>
               </ListItem>
@@ -135,14 +135,10 @@ const UserDashboardLayout = ({ children }: { children: React.ReactNode }) => {
           <GridItem
             padding={5}
             minH={"50vh"}
-            className='shadow'
+            className="shadow"
             gridArea={"table"}
           >
-            {/* <RestaurantForm /> */}
-            {/* <RestaurantMenuBuilder /> */}
-
             {children}
-            {/* <Orders /> */}
           </GridItem>
         </Grid>
       </Container>
