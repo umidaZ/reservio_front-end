@@ -60,6 +60,7 @@ const MenuCategoryCreator = () => {
       )
       .then((res) => {
         console.log(res);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -84,6 +85,7 @@ const MenuCategoryCreator = () => {
         }
       );
       console.log(response);
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -93,25 +95,25 @@ const MenuCategoryCreator = () => {
     <Stack spacing={4}>
       <Box>
         <FormControl isInvalid={!!error}>
-          <FormLabel htmlFor='name'>Name</FormLabel>
+          <FormLabel htmlFor="name">Name</FormLabel>
           <Input
-            id='name'
-            type='text'
+            id="name"
+            type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
           <FormErrorMessage>{error}</FormErrorMessage>
         </FormControl>
-        <Button mt={4} colorScheme='teal' onClick={handleAddCategory}>
+        <Button mt={4} colorScheme="teal" onClick={handleAddCategory}>
           Add Category
         </Button>
       </Box>
 
       <Box>
-        <Text fontSize='xl' fontWeight='bold' mb={2}>
+        <Text fontSize="xl" fontWeight="bold" mb={2}>
           Categories
         </Text>
-        <Table variant='simple'>
+        <Table variant="simple">
           <Thead>
             <Tr>
               <Th>ID</Th>
@@ -126,8 +128,8 @@ const MenuCategoryCreator = () => {
                 <Td>{category.name}</Td>
                 <Td>
                   <Button
-                    size='sm'
-                    colorScheme='red'
+                    size="sm"
+                    colorScheme="red"
                     onClick={() => handleDeleteCategory(category.id)}
                   >
                     Delete

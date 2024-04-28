@@ -82,14 +82,14 @@ const Orders = () => {
     <>
       <Flex my={3}>
         <InputGroup>
-          <Input type='search' placeholder='Basic usage' />{" "}
+          <Input type="search" placeholder="Basic usage" />{" "}
           <InputRightElement>
             <Search2Icon />
           </InputRightElement>
         </InputGroup>
       </Flex>
       <TableContainer>
-        <Table variant='simple'>
+        <Table variant="simple">
           <TableCaption>
             <b>Orders</b>
           </TableCaption>
@@ -98,8 +98,8 @@ const Orders = () => {
               <Th>&#8470; guests</Th>
               <Th>Reservation day</Th>
               <Th>Reservation time</Th>
-              <Th>Customer Name</Th>
               <Th>Customer ID</Th>
+              <Th>Time</Th>
               <Th>Order Status</Th>
               <Th>Action</Th>
             </Tr>
@@ -114,6 +114,7 @@ const Orders = () => {
                 status,
                 start_time,
                 id,
+                special_requests,
               } = r;
               return (
                 <Tr key={i}>
@@ -123,9 +124,7 @@ const Orders = () => {
                     {start_time} - {end_time}
                   </Td>
                   <Td>{customer_id}</Td>
-                  <Td>
-                    {start_time} - {end_time}
-                  </Td>
+                  <Td>{special_requests}</Td>
                   <Td>{getOrderStatusBadge(status)}</Td>
                   <Td>
                     <Select
@@ -146,9 +145,9 @@ const Orders = () => {
                       }}
                       placeholder={status}
                     >
-                      <option value='Accept'>Accept</option>
-                      <option value='Reject'>Reject</option>
-                      <option value='Pending'>Pending</option>
+                      <option value="Accept">Accept</option>
+                      <option value="Reject">Reject</option>
+                      <option value="Pending">Pending</option>
                     </Select>
                   </Td>
                 </Tr>

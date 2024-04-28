@@ -37,11 +37,13 @@ const LoginRestaurant = () => {
           dispatch(login(res.data.user));
           window.localStorage.setItem("token", res.data.access);
           window.localStorage.setItem("restaurant", JSON.stringify(res.data));
+          console.log(res.data.restaurant);
+          window.localStorage.setItem("restaurantId", res.data.restaurant);
           setTimeout(() => {
             navigate("/restaurant/user-dashboard/dashboard-orders");
-            // setTimeout(() => {
-            //   window.location.reload();
-            // }, 500);
+            setTimeout(() => {
+              window.location.reload();
+            }, 500);
           }, 1000);
         }
       })
@@ -67,9 +69,9 @@ const LoginRestaurant = () => {
         <FormLabel>Username</FormLabel>
         <Input
           onChange={(e) => setClient({ ...client, username: e.target.value })}
-          placeholder='Username'
+          placeholder="Username"
           value={client?.username}
-          name='username'
+          name="username"
           required
         />
       </FormControl>
@@ -77,10 +79,10 @@ const LoginRestaurant = () => {
         <FormLabel>Password</FormLabel>
         <Input
           onChange={(e) => setClient({ ...client, password: e.target.value })}
-          placeholder='Password'
+          placeholder="Password"
           required
           value={client?.password}
-          name='password'
+          name="password"
         />
       </FormControl>
 
@@ -88,8 +90,8 @@ const LoginRestaurant = () => {
         onClick={handleLogin}
         width={"100%"}
         isLoading={isLoading}
-        loadingText='Logging you in...'
-        colorScheme='green'
+        loadingText="Logging you in..."
+        colorScheme="green"
         mt={4}
       >
         Login

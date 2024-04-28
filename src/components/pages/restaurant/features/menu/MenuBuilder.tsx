@@ -133,15 +133,15 @@ const RestaurantMenuBuilder: React.FC = () => {
     <Box p={5}>
       <VStack spacing={4}>
         {menuItems.map((item) => (
-          <HStack key={item.id} width='100%'>
+          <HStack key={item.id} width="100%">
             <FormControl isRequired>
               <FormLabel>Menu Category</FormLabel>
               <Select
                 onChange={(e) => handleChange(item.id, "menu", e.target.value)}
-                name='menu'
-                placeholder='Select option'
+                name="menu"
+                placeholder="Select option"
               >
-                <option value='option1'>Option 1</option>
+                <option value="option1">Option 1</option>
                 {categories?.data?.map((c: any) => (
                   <option value={c.id}>{c.name}</option>
                 ))}
@@ -166,7 +166,7 @@ const RestaurantMenuBuilder: React.FC = () => {
             <FormControl isRequired>
               <FormLabel>unit_price</FormLabel>
               <Input
-                type='number'
+                type="number"
                 value={item.unit_price}
                 onChange={(e) =>
                   handleChange(item.id, "unit_price", e.target.value)
@@ -176,22 +176,22 @@ const RestaurantMenuBuilder: React.FC = () => {
             <FormControl isRequired>
               <FormLabel>Photo</FormLabel>
               <Input
-                type='file'
-                accept='image/*'
+                type="file"
+                accept="image/*"
                 onChange={(e) =>
                   handleChange(item.id, "photo", e.target.files?.[0] || null)
                 }
               />
             </FormControl>
             <IconButton
-              aria-label='Remove menu item'
+              aria-label="Remove menu item"
               icon={<CloseIcon />}
               onClick={() => handleRemoveMenuItem(item.id)}
             />
           </HStack>
         ))}
         <Button onClick={handleAddMenuItem}>Add Menu Item</Button>
-        <Button colorScheme='blue' onClick={handleSubmit}>
+        <Button colorScheme="blue" onClick={handleSubmit}>
           Submit Menu
         </Button>
       </VStack>
@@ -212,7 +212,7 @@ const RestaurantMenuBuilder: React.FC = () => {
                       }
                     });
                   }}
-                  type='radio'
+                  type="radio"
                   value={e.id}
                   name={"menu"}
                   key={i}
@@ -234,9 +234,15 @@ const RestaurantMenuBuilder: React.FC = () => {
                   />
 
                   <Box>
-                    <Text>{e.name}</Text>
-                    <Text>{e.description}</Text>
-                    <Text>{e.unit_price}</Text>
+                    <Text>
+                      <b>Menu Item</b>: {e.name}
+                    </Text>
+                    <Text>
+                      <b>Description</b>: {e.description}
+                    </Text>
+                    <Text>
+                      <b>Price</b>: {e.unit_price}000.00 sum
+                    </Text>
                   </Box>
                 </Flex>
               </CardBody>

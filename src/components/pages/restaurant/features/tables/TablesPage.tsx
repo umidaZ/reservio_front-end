@@ -21,7 +21,7 @@ import { BASE_URL } from "../../../../../constants/BASE_URL";
 import { getTables } from "../../../../../services/apiGetTables";
 import TimeSlots from "./TimeSlots";
 const TablesPage = () => {
-  const restaurantID = JSON.parse(localStorage.getItem("restaurantInfo")!)?.id;
+  const restaurantID = localStorage.getItem("restaurantId")!;
   const [formData, setFormData] = useState({
     number: "",
     capacity: "",
@@ -59,37 +59,37 @@ const TablesPage = () => {
   return (
     <Box>
       <Card my={5} p={5}>
-        <Text fontSize='3xl'>Add Tables</Text>
+        <Text fontSize="3xl">Add Tables</Text>
         <Input
           my={5}
-          name='number'
-          placeholder='Table number'
+          name="number"
+          placeholder="Table number"
           required
           onChange={handleChange}
-          type='number'
+          type="number"
           min={0}
         />
         <Input
           my={5}
-          name='capacity'
-          placeholder='Table Capacity'
+          name="capacity"
+          placeholder="Table Capacity"
           required
           onChange={handleChange}
-          type='number'
+          type="number"
           min={0}
         />
         <Button
-          onClick={() => handleCreate(restaurantID)}
-          colorScheme='teal'
+          onClick={() => handleCreate(Number(restaurantID))}
+          colorScheme="teal"
           mt={5}
-          type='submit'
+          type="submit"
         >
           Create
         </Button>
       </Card>
-      <Text fontSize='3xl'>Tables</Text>
+      <Text fontSize="3xl">Tables</Text>
       <TableContainer>
-        <Table variant='simple'>
+        <Table variant="simple">
           <TableCaption>Restaurant's Table</TableCaption>
           <Thead>
             <Tr>

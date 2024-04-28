@@ -19,10 +19,10 @@ import {
 } from "../../../constants/restaurants";
 import Footer from "../ui/Footer";
 import MakeReservation from "./MakeReservation";
-import PopularDishes from "./features/dishes - cuisines/PopularDishes";
-import RestaurantMenu from "./features/menu/RestaurantMenu";
+// import PopularDishes from "./features/dishes - cuisines/PopularDishes";
+import MenuItemsForRestaurant from "./features/menu/MenuItemsForRestaurant";
 import RestaurantOverview from "./RestaurantOverview";
-import RestaurantPhotos from "./RestaurantPhotos";
+// import RestaurantPhotos from "./RestaurantPhotos";
 import RestaurantReviews from "./RestaurantReviews";
 
 const RestaurantPage = () => {
@@ -67,7 +67,7 @@ const RestaurantPage = () => {
           gridTemplateAreas={[`"restaurant-info  restaurant-info reservation"`]}
         >
           <Box
-            className='shadow'
+            className="shadow"
             gridArea={"restaurant-info"}
             minHeight={"30vh"}
             backgroundColor={"white"}
@@ -78,8 +78,8 @@ const RestaurantPage = () => {
             <Tabs>
               <TabList>
                 <Tab>Overview</Tab>
-                <Tab>Popular Dishes</Tab>
-                <Tab>Photos</Tab>
+                {/* <Tab>Popular Dishes</Tab>
+                <Tab>Photos</Tab> */}
                 <Tab>Menu</Tab>
                 <Tab>Reviews</Tab>
               </TabList>
@@ -88,14 +88,14 @@ const RestaurantPage = () => {
                 <TabPanel>
                   <RestaurantOverview data={restaurant} />
                 </TabPanel>
-                <TabPanel>
+                {/* <TabPanel>
                   <PopularDishes />
                 </TabPanel>
                 <TabPanel>
                   <RestaurantPhotos />
-                </TabPanel>
+                </TabPanel> */}
                 <TabPanel>
-                  <RestaurantMenu />
+                  <MenuItemsForRestaurant />
                 </TabPanel>
                 <TabPanel>
                   <RestaurantReviews />

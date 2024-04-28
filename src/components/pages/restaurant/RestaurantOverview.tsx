@@ -28,7 +28,7 @@ import ReviewForm from "./RestaurantReviews";
 const RestaurantOverview = ({ data }: any) => {
   const l: RestaurantState = useLocation().state;
   const { restaurantId } = useParams();
-  const { name, rating, reviews, cuisines, is_halal } = l;
+  const { name, rating, num_reviews, cuisines, is_halal } = l;
   const { data: reviewList } = useQuery({
     queryKey: ["reviews"],
     queryFn: () => getRestaurantReviews(restaurantId),
@@ -60,7 +60,7 @@ const RestaurantOverview = ({ data }: any) => {
           </Text>
           <Flex alignItems={"center"}>
             <MdOutlineReviews size={24} />
-            <Text pl={2}>{reviews || "0 reviews"}</Text>
+            <Text pl={2}>{num_reviews || "0 reviews"}</Text>
           </Flex>
           <Flex alignItems={"center"}>
             <CiMoneyBill size={24} />
@@ -78,7 +78,7 @@ const RestaurantOverview = ({ data }: any) => {
           </Flex>
         </Flex>
       </Flex>
-      <Divider my={5} orientation="horizontal" />
+      {/* <Divider my={5} orientation="horizontal" />
       <Flex gap={5} alignItems={"center"}>
         <Text fontSize={16} color={"gray.500"}>
           Top Tags:{" "}
@@ -89,7 +89,7 @@ const RestaurantOverview = ({ data }: any) => {
         <Tag p={3} rounded={"full"}>
           Vegan Options
         </Tag>
-      </Flex>
+      </Flex> */}
       <Divider my={5} orientation="horizontal" />
       <Text fontSize={18} color={"gray.800"}>
         Top Dishes:{" "}

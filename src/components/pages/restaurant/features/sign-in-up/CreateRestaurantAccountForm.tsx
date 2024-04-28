@@ -15,18 +15,13 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 
-import { useDispatch } from "react-redux";
-
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { BASE_URL } from "../../../../../constants/BASE_URL";
-import { login } from "../../../../../features/userSlice";
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { BASE_URL } from "../../../../../constants/BASE_URL";
 import { getCuisines } from "../../../../../services/apiCuisines";
 
 const CreateRestaurantAccountForm = () => {
   const [show, setShow] = useState(false);
-  const navigate = useNavigate();
   const [client, setClient] = useState({
     confirm: "",
     password: "",
@@ -51,7 +46,7 @@ const CreateRestaurantAccountForm = () => {
   });
   const [agree, setAgree] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const dispatch = useDispatch();
+
   const toast = useToast();
   const { data: cuisines } = useQuery<[] | []>({
     queryKey: ["cuisines"],
@@ -96,12 +91,24 @@ const CreateRestaurantAccountForm = () => {
           title: "Registration has been successful",
           status: "success",
         });
-        dispatch(login({ ...response?.data?.data, role: 1 }));
-        window.localStorage.setItem("token", response?.data?.token);
-        navigate("/restaurant/update-profile");
+        // dispatch(login({ ...response?.data?.data, role: 1 }));
+        // window.localStorage.setItem("token", response?.data?.token);
+        // window.localStorage.setItem(
+        //   "restaurantInfo",
+        //   JSON.stringify(response?.data?.data)
+        // );
+
+        // navigate("/restaurant/user-dashboard/dashboard-orders");
+        console.log(response.data?.data);
+        toast({
+          title: "Registration has been successful",
+          description: "Please log in using your credentials",
+          status: "success",
+        });
+
         setTimeout(() => {
           window.location.reload();
-        }, 1000);
+        }, 3000);
       }
     } catch (err) {
       console.error("Error", err);
@@ -118,9 +125,9 @@ const CreateRestaurantAccountForm = () => {
         <FormLabel>First name</FormLabel>
         <Input
           onChange={(e) => setClient({ ...client, first_name: e.target.value })}
-          placeholder='First name'
+          placeholder="First name"
           value={client?.first_name}
-          name='first_name'
+          name="first_name"
           required
         />
       </FormControl>
@@ -128,29 +135,29 @@ const CreateRestaurantAccountForm = () => {
         <FormLabel>Last name</FormLabel>
         <Input
           onChange={(e) => setClient({ ...client, last_name: e.target.value })}
-          placeholder='Last name'
+          placeholder="Last name"
           required
           value={client?.last_name}
-          name='last_name'
+          name="last_name"
         />
       </FormControl>
       <FormControl mt={4}>
         <FormLabel>Username</FormLabel>
         <Input
           onChange={(e) => setClient({ ...client, username: e.target.value })}
-          placeholder='Phone number'
+          placeholder="Phone number"
           required
           value={client?.username}
-          name='phone_number'
+          name="phone_number"
         />
       </FormControl>
       <FormControl mt={4}>
         <FormLabel>Email</FormLabel>
         <Input
           onChange={(e) => setClient({ ...client, email: e.target.value })}
-          placeholder='Email'
-          type='email'
-          name='email'
+          placeholder="Email"
+          type="email"
+          name="email"
           required
           value={client?.email}
         />
@@ -161,9 +168,9 @@ const CreateRestaurantAccountForm = () => {
           onChange={(e) =>
             setClient({ ...client, contact_number: e.target.value })
           }
-          placeholder='Contact number'
-          type='tel'
-          name='contact_number'
+          placeholder="Contact number"
+          type="tel"
+          name="contact_number"
           required
           value={client?.contact_number}
         />
@@ -172,9 +179,9 @@ const CreateRestaurantAccountForm = () => {
         <FormLabel>Website</FormLabel>
         <Input
           onChange={(e) => setClient({ ...client, website: e.target.value })}
-          placeholder='Website'
-          type='text'
-          name='website'
+          placeholder="Website"
+          type="text"
+          name="website"
           required
           value={client?.website}
         />
@@ -183,9 +190,9 @@ const CreateRestaurantAccountForm = () => {
         <FormLabel>Instagram</FormLabel>
         <Input
           onChange={(e) => setClient({ ...client, instagram: e.target.value })}
-          placeholder='Instagram'
-          type='text'
-          name='instagram'
+          placeholder="Instagram"
+          type="text"
+          name="instagram"
           required
           value={client?.instagram}
         />
@@ -194,17 +201,17 @@ const CreateRestaurantAccountForm = () => {
         <FormLabel>Telegram</FormLabel>
         <Input
           onChange={(e) => setClient({ ...client, telegram: e.target.value })}
-          placeholder='Telegram'
-          type='text'
-          name='telegram'
+          placeholder="Telegram"
+          type="text"
+          name="telegram"
           required
           value={client?.telegram}
         />
       </FormControl>
       <Select
         my={4}
-        name='cuisines'
-        placeholder='Cuisines'
+        name="cuisines"
+        placeholder="Cuisines"
         onChange={(e) => {
           const c: number[] = [Number(e.target.value)]!;
           setClient({
@@ -227,11 +234,11 @@ const CreateRestaurantAccountForm = () => {
         justifyContent={"start"}
         alignItems={"start"}
       >
-        <FormControl id='opening_time' isRequired>
+        <FormControl id="opening_time" isRequired>
           <FormLabel>Opening Time</FormLabel>
           <Input
-            type='time'
-            name='opening_time'
+            type="time"
+            name="opening_time"
             value={client.opening_time}
             onChange={(e) =>
               setClient({ ...client, opening_time: e.target.value })
@@ -239,11 +246,11 @@ const CreateRestaurantAccountForm = () => {
           />
         </FormControl>
 
-        <FormControl id='closing_time' isRequired>
+        <FormControl id="closing_time" isRequired>
           <FormLabel>Closing Time</FormLabel>
           <Input
-            type='time'
-            name='closing_time'
+            type="time"
+            name="closing_time"
             value={client.closing_time}
             onChange={(e) =>
               setClient({ ...client, closing_time: e.target.value })
@@ -252,9 +259,9 @@ const CreateRestaurantAccountForm = () => {
         </FormControl>
       </Flex>
 
-      <FormControl my={4} id='is_halal'>
+      <FormControl my={4} id="is_halal">
         <Checkbox
-          name='is_halal'
+          name="is_halal"
           isChecked={client.is_halal}
           onChange={(e) =>
             setClient({ ...client, is_halal: Boolean(e.target.checked) })
@@ -267,9 +274,9 @@ const CreateRestaurantAccountForm = () => {
         <FormLabel>Location</FormLabel>
         <Input
           onChange={(e) => setClient({ ...client, location: e.target.value })}
-          placeholder='Location'
-          type='text'
-          name='location'
+          placeholder="Location"
+          type="text"
+          name="location"
           required
           value={client?.location}
         />
@@ -278,9 +285,9 @@ const CreateRestaurantAccountForm = () => {
         <FormLabel>Name</FormLabel>
         <Input
           onChange={(e) => setClient({ ...client, name: e.target.value })}
-          placeholder='Name'
-          type='text'
-          name='name'
+          placeholder="Name"
+          type="text"
+          name="name"
           required
           value={client?.name}
         />
@@ -288,44 +295,44 @@ const CreateRestaurantAccountForm = () => {
       <FormControl mt={4}>
         <FormLabel>Upload Image</FormLabel>
         <Input
-          type='file'
-          name='photos'
-          accept='image/*'
+          type="file"
+          name="photos"
+          accept="image/*"
           onChange={handleFileChange}
         />
       </FormControl>
       <FormLabel mt={4}>Password</FormLabel>
-      <InputGroup size='md'>
+      <InputGroup size="md">
         <Input
-          pr='4.5rem'
+          pr="4.5rem"
           onChange={(e) => setClient({ ...client, password: e.target.value })}
           type={show ? "text" : "password"}
           value={client?.password}
-          placeholder='Enter password'
+          placeholder="Enter password"
         />
-        <InputRightElement width='4.5rem'>
-          <Button h='1.75rem' size='sm' onClick={() => setShow(!show)}>
+        <InputRightElement width="4.5rem">
+          <Button h="1.75rem" size="sm" onClick={() => setShow(!show)}>
             {show ? "Hide" : "Show"}
           </Button>
         </InputRightElement>
       </InputGroup>
       <FormLabel mt={4}>Confirm password</FormLabel>
-      <InputGroup size='md'>
+      <InputGroup size="md">
         <Input
-          pr='4.5rem'
+          pr="4.5rem"
           onChange={(e) => setClient({ ...client, confirm: e.target.value })}
           type={show ? "text" : "password"}
           value={client?.confirm}
-          placeholder='Confirm password'
+          placeholder="Confirm password"
         />
-        <InputRightElement width='4.5rem'>
-          <Button h='1.75rem' size='sm' onClick={() => setShow(!show)}>
+        <InputRightElement width="4.5rem">
+          <Button h="1.75rem" size="sm" onClick={() => setShow(!show)}>
             {show ? "Hide" : "Show"}
           </Button>
         </InputRightElement>
       </InputGroup>
       <FormControl mt={4}>
-        <input type='checkbox' onChange={(e) => setAgree(e.target.checked)} />{" "}
+        <input type="checkbox" onChange={(e) => setAgree(e.target.checked)} />{" "}
         Accept Terms & Conditions
       </FormControl>
       {agree && (
@@ -333,8 +340,8 @@ const CreateRestaurantAccountForm = () => {
           onClick={handleRegister}
           width={"100%"}
           isLoading={isLoading}
-          loadingText='Creating your account...'
-          colorScheme='green'
+          loadingText="Creating your account..."
+          colorScheme="green"
           mt={4}
         >
           Register

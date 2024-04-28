@@ -56,7 +56,7 @@ const MenuItemsForRestaurant = () => {
                     }
                   });
                 }}
-                type='radio'
+                type="radio"
                 value={e.id}
                 name={"menu"}
                 key={i}
@@ -85,7 +85,7 @@ const MenuItemsForRestaurant = () => {
                       <b>Description:</b> {e.description}
                     </Text>
                     <Text>
-                      <b>Price:</b> ${e.unit_price}
+                      <b>Price:</b> {e.unit_price}000.00 sum
                     </Text>
                   </Box>
                 </CardBody>
